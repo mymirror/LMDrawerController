@@ -164,7 +164,8 @@
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     //获得x方向拖拽的距离
     CGFloat offset = [pan translationInView:pan.view].x;
-    
+    [self.mainVc.view addSubview:self.coverButton];
+    self.coverButton.alpha = offset/screenWidth;
     if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled) {
         //当拖拽结束时或拖拽取消时，判断主控制器的view的x值有没有到达屏幕的一半
         if (self.mainVc.view.frame.origin.x > screenWidth/2) {
