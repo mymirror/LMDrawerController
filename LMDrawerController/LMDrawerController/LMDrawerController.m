@@ -71,6 +71,7 @@
  *  打开左边控制器方法
  */
 - (void)openLeftVc{
+    [self.mainVc.view addSubview:self.coverButton];
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.mainVc.view.transform = CGAffineTransformMakeTranslation(self.leftWidth, 0);
         self.leftMenuVc.view.transform = CGAffineTransformIdentity;
@@ -160,7 +161,6 @@
  *  手势回调方法
  */
 - (void)edgePanGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)pan{
-    NSLog(@"%s",__FUNCTION__);
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     //获得x方向拖拽的距离
     CGFloat offset = [pan translationInView:pan.view].x;
@@ -207,7 +207,7 @@
 -(UIButton *)coverButton{
     if (_coverButton == nil) {
         _coverButton = [[UIButton alloc] init];
-        _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
         _coverButton.frame = self.mainVc.view.bounds;
         [_coverButton addTarget:self action:@selector(covreButtonClick) forControlEvents:UIControlEventTouchUpInside];
         //创建一个拖拽手势
