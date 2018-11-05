@@ -106,7 +106,7 @@
     destVc.view.transform = self.mainVc.view.transform;
     [self.view addSubview:destVc.view];
     [self addChildViewController:destVc];
-//    [self covreButtonClick];
+    [self covreButtonClick];
     self.showingVc = destVc;
     //以动画形式 让控制器回到最初状态
     [UIView animateWithDuration:0.25 animations:^{
@@ -135,9 +135,9 @@
     self.leftMenuVc.view.transform = CGAffineTransformMakeTranslation(-self.leftWidth, 0);
     //给mainVc 设置阴影效果
     self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
-    self.mainVc.view.layer.shadowOpacity=  1;
-    self.mainVc.view.layer.shadowRadius = 5;
+//    self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
+//    self.mainVc.view.layer.shadowOpacity=  1;
+//    self.mainVc.view.layer.shadowRadius = 5;
     //给tabBarVc的所有子控制器添加一个边缘拖拽的手势
     for (UIViewController *childVc in self.mainVc.childViewControllers) {
         [self addScreenEdgePanGestureRecognizerToView:childVc.view];
@@ -164,6 +164,7 @@
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     //获得x方向拖拽的距离
     CGFloat offset = [pan translationInView:pan.view].x;
+    
     if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled) {
         //当拖拽结束时或拖拽取消时，判断主控制器的view的x值有没有到达屏幕的一半
         if (self.mainVc.view.frame.origin.x > screenWidth/2) {
@@ -174,8 +175,8 @@
         }
     }else if (pan.state == UIGestureRecognizerStateChanged){
         //当拖拽时使mainVc的view的x值随着往x方向拖拽的距离的改变而变化
-        self.mainVc.view.transform = CGAffineTransformMakeTranslation(offset, 0);
-        self.leftMenuVc.view.transform= CGAffineTransformMakeTranslation(offset-self.leftWidth, 0);
+        self.mainVc.view.transform = CGAffineTransformMakeTranslation((offset-self.leftWidth)<0?offset:self.leftWidth, 0);
+        self.leftMenuVc.view.transform= CGAffineTransformMakeTranslation((offset-self.leftWidth)<0?(offset-self.leftWidth):0, 0);
     }
 }
 /**
@@ -205,7 +206,7 @@
 -(UIButton *)coverButton{
     if (_coverButton == nil) {
         _coverButton = [[UIButton alloc] init];
-        _coverButton.backgroundColor = [UIColor clearColor];
+        _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
         _coverButton.frame = self.mainVc.view.bounds;
         [_coverButton addTarget:self action:@selector(covreButtonClick) forControlEvents:UIControlEventTouchUpInside];
         //创建一个拖拽手势
