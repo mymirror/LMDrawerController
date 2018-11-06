@@ -12,18 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LMDrawerController : UIViewController
 
-
-/**
- *   显示主界面的遮罩  默认显示
- */
-@property (nonatomic,assign) BOOL showCover;
-
-
-/**
- *   显示主界面的阴影 默认不显示
- */
-@property (nonatomic,assign) BOOL showShadow;
-
 /**
  *  快速获得抽屉控制器
  *
@@ -36,9 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param mainVc     主控制器－UITabBarController
  *  @param leftMenuVc 左边菜单控制器
  *  @param leftWith 左边控制器现实的最大宽度
+ *  @param showCover 显示主视图遮罩
  *  @return 抽屉控制器
  */
-+ (instancetype)drawerVcWithMainVc:(UIViewController *)mainVc leftMenuVc:(UIViewController *)leftMenuVc leftWith:(CGFloat)leftWith;
++ (instancetype)drawerVcWithMainVc:(UIViewController *)mainVc leftMenuVc:(UIViewController *)leftMenuVc leftWith:(CGFloat)leftWith showCover:(BOOL)showCover;
 /**
  *  打开左边控制器方法
  */

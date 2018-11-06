@@ -31,6 +31,12 @@
  */
 @property (nonatomic,assign) CGFloat leftWidth;
 
+
+/**
+ *  记录是否显示遮罩 默认不显示
+ */
+@property (nonatomic,assign) BOOL showCover;
+
 @end
 
 @implementation LMDrawerController
@@ -51,12 +57,13 @@
  *
  *  @return 抽屉控制器
  */
-+ (instancetype)drawerVcWithMainVc:(UIViewController *)mainVc leftMenuVc:(UIViewController *)leftMenuVc leftWith:(CGFloat)leftWith{
++ (instancetype)drawerVcWithMainVc:(UIViewController *)mainVc leftMenuVc:(UIViewController *)leftMenuVc leftWith:(CGFloat)leftWith showCover:(BOOL)showCover{
     //创建抽屉控制器
     LMDrawerController *drawerVc = [[LMDrawerController alloc] init];
     drawerVc.mainVc = mainVc;
     drawerVc.leftMenuVc = leftMenuVc;
     drawerVc.leftWidth = leftWith;
+    drawerVc.showCover = showCover;
     //将左边菜单控制器的view添加到抽屉控制器的view上
     [drawerVc.view addSubview:leftMenuVc.view];
     [drawerVc.view addSubview:mainVc.view];
@@ -135,8 +142,8 @@
     //默认左边控制器的view向左偏移self.leftwidth
     self.leftMenuVc.view.transform = CGAffineTransformMakeTranslation(-self.leftWidth, 0);
     //给mainVc 设置阴影效果
-    if (self.showShadow) {
-       self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    if (!_showCover) {
+        self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
         self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
         self.mainVc.view.layer.shadowOpacity=  1;
         self.mainVc.view.layer.shadowRadius = 5; 
@@ -211,7 +218,7 @@
 -(UIButton *)coverButton{
     if (_coverButton == nil) {
         _coverButton = [[UIButton alloc] init];
-        if (!self.showCover) {
+        if (_showCover) {
             _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
         }else
         {
