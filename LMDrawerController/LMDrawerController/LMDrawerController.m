@@ -135,10 +135,13 @@
     //默认左边控制器的view向左偏移self.leftwidth
     self.leftMenuVc.view.transform = CGAffineTransformMakeTranslation(-self.leftWidth, 0);
     //给mainVc 设置阴影效果
-    self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
-//    self.mainVc.view.layer.shadowOpacity=  1;
-//    self.mainVc.view.layer.shadowRadius = 5;
+    if (self.showShadow) {
+       self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
+        self.mainVc.view.layer.shadowOpacity=  1;
+        self.mainVc.view.layer.shadowRadius = 5; 
+    }
+    
     //给tabBarVc的所有子控制器添加一个边缘拖拽的手势
     for (UIViewController *childVc in self.mainVc.childViewControllers) {
         [self addScreenEdgePanGestureRecognizerToView:childVc.view];
@@ -161,6 +164,7 @@
  *  手势回调方法
  */
 - (void)edgePanGestureRecognizer:(UIScreenEdgePanGestureRecognizer *)pan{
+    [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     //获得x方向拖拽的距离
     CGFloat offset = [pan translationInView:pan.view].x;
@@ -207,7 +211,12 @@
 -(UIButton *)coverButton{
     if (_coverButton == nil) {
         _coverButton = [[UIButton alloc] init];
-        _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
+        if (!self.showCover) {
+            _coverButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.25];
+        }else
+        {
+            _coverButton.backgroundColor = [UIColor clearColor];
+        }
         _coverButton.frame = self.mainVc.view.bounds;
         [_coverButton addTarget:self action:@selector(covreButtonClick) forControlEvents:UIControlEventTouchUpInside];
         //创建一个拖拽手势

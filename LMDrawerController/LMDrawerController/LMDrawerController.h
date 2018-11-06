@@ -12,6 +12,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LMDrawerController : UIViewController
 
+
+/**
+ *   显示主界面的遮罩  默认显示
+ */
+@property (nonatomic,assign) BOOL showCover;
+
+
+/**
+ *   显示主界面的阴影 默认不显示
+ */
+@property (nonatomic,assign) BOOL showShadow;
+
 /**
  *  快速获得抽屉控制器
  *
