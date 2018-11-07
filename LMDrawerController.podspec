@@ -9,7 +9,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LMDrawerController"
-  spec.version      = "0.0.6"
+  spec.version      = "0.0.7"
   spec.summary      = "A short description of LMDrawerController."
   
   spec.description  = <<-DESC  

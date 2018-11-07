@@ -143,6 +143,7 @@
     self.leftMenuVc.view.transform = CGAffineTransformMakeTranslation(-self.leftWidth, 0);
     //给mainVc 设置阴影效果
     if (!_showCover) {
+        self.mainVc.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainVc.view.bounds].CGPath;
         self.mainVc.view.layer.shadowColor = [UIColor blackColor].CGColor;
         self.mainVc.view.layer.shadowOffset = CGSizeMake(-3, -3);
         self.mainVc.view.layer.shadowOpacity=  1;
